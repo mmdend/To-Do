@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
@@ -48,13 +48,21 @@ class CustomLogoutView(LogoutView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class ProfileView(LoginView):
+class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/profile_page.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('accounts:login')
-        return super().dispatch(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        tasks = self.request.user.tasks
+
+        context.update({
+            'total_tasks': tasks.count(),
+            'done_tasks': tasks.filter(is_completed=True).count(),
+            'pending_tasks': tasks.filter(is_completed=False).count(),
+        })
+
+        return context
 
 
 class HomeView(TemplateView):

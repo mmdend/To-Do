@@ -1,28 +1,69 @@
-<div class="container">
-    <h2>پروفایل کاربری</h2>
+{% extends 'shared/base.html' %}
 
-    <div class="card">
-        <div class="card-body">
-            {% if user.avatar %}
-                <img src="{{ user.avatar.url }}" alt="Avatar" style="width: 150px; height: 150px; border-radius: 50%;">
-            {% else %}
-                <div style="width: 150px; height: 150px; border-radius: 50%; background-color: #ccc; display: flex; align-items: center; justify-content: center;">
-                    بدون آواتار
-                </div>
-            {% endif %}
+{% block title %}
+Profile
+{% endblock %}
 
-            <h3>{{ user.username }}</h3>
-            <p><strong>ایمیل:</strong> {{ user.email }}</p>
-            <p><strong>تاریخ عضویت:</strong> {{ user.created_date|date:"Y/m/d" }}</p>
-            <p><strong>آخرین ورود:</strong> {{ user.last_login|date:"Y/m/d H:i" }}</p>
+{% block body %}
 
-            {#            <a href="{% url 'accounts:logout' %}" class="btn btn-danger">خروج</a>#}
-            <form action="{% url 'accounts:logout' %}" method="post" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger">خروج</button>
-            </form>
+<main class="container">
 
-            <a href="{% url 'tasks:list' %}" class="btn btn-primary">لیست تسک ها</a>
+    <div class="profile-header">
+
+        {% if user.avatar %}
+            <img class="profile-avatar"
+                 src="{{ user.avatar.url }}"
+                 alt="Avatar">
+        {% else %}
+            <div class="profile-avatar">
+                {{ user.username|first|upper }}
+            </div>
+        {% endif %}
+
+        <div class="profile-name">
+            {{ user.username }}
         </div>
+
+        <div class="profile-email">
+            {{ user.email }}
+        </div>
+
+        <div class="profile-stats">
+
+            <div class="stat">
+                <div class="stat-value">{{ total_tasks|default:0 }}</div>
+                <div class="stat-label">Total</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-value">{{ done_tasks|default:0 }}</div>
+                <div class="stat-label">Done</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-value">{{ pending_tasks|default:0 }}</div>
+                <div class="stat-label">Pending</div>
+            </div>
+
+        </div>
+
     </div>
-</div>
+
+    <div class="profile-actions">
+
+        <a href="{% url 'tasks:list' %}" class="btn btn-secondary">
+            My Tasks
+        </a>
+
+        <form action="{% url 'accounts:logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button class="btn btn-danger">
+                Logout
+            </button>
+        </form>
+
+    </div>
+
+</main>
+
+{% endblock %}

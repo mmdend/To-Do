@@ -1,7 +1,63 @@
 {% extends 'shared/base.html' %}
 
+{% block title %}
+Home
+{% endblock %}
+
 {% block body %}
 
-WELCOME
+<main class="container">
+
+    <div class="home-hero">
+
+        <div class="home-badge">
+            ✨ Simple • Fast • Organized
+        </div>
+
+        <h1 class="home-title">
+            Manage your tasks like a pro
+        </h1>
+
+        <p class="home-subtitle">
+            A clean and minimal todo app to help you stay focused, track progress, and get things done faster.
+        </p>
+
+        {% if user.is_authenticated %}
+
+            <div class="home-actions">
+
+                <a href="{% url 'tasks:list' %}" class="btn btn-primary">
+                    📋 My Tasks
+                </a>
+
+                <a href="{% url 'tasks:create' %}" class="btn btn-secondary">
+                    ➕ New Task
+                </a>
+
+                <a href="{% url 'accounts:profile' %}" class="btn btn-secondary">
+                    👤 Profile
+                </a>
+
+            </div>
+
+        {% else %}
+
+            <div class="home-actions">
+
+                <a href="{% url 'accounts:login' %}" class="btn btn-primary">
+                    🔑 Login
+                </a>
+
+                <a href="{% url 'accounts:register' %}" class="btn btn-secondary">
+                    🚀 Create Account
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</main>
 
 {% endblock %}

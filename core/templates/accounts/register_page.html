@@ -1,7 +1,70 @@
-<h2>ثبت‌نام</h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">ثبت‌نام</button>
-</form>
-<p>قبلاً حساب دارید؟ <a href="{% url 'accounts:login' %}">وارد شوید</a></p>
+{% extends 'shared/base.html' %}
+
+{% block title %}
+Sign Up
+{% endblock %}
+
+{% block body %}
+<main class="container">
+    <h1 class="page-title">Sign Up</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label class="form-label" for="{{ form.username.id_for_label }}">
+                Username
+            </label>
+            {{ form.username }}
+            {{ form.username.errors }}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="{{ form.email.id_for_label }}">
+                Email
+            </label>
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="{{ form.avatar.id_for_label }}">
+                Avatar
+            </label>
+            {{ form.avatar }}
+            {{ form.avatar.errors }}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="{{ form.password1.id_for_label }}">
+                Password
+            </label>
+            {{ form.password1 }}
+            {{ form.password1.errors }}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="{{ form.password2.id_for_label }}">
+                Confirm Password
+            </label>
+            {{ form.password2 }}
+            {{ form.password2.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Create Account
+        </button>
+    </form>
+
+    <p class="form-footer">
+        Already have an account?
+        <a href="{% url 'accounts:login' %}">Login</a>
+    </p>
+</main>
+{% endblock %}

@@ -1,8 +1,9 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import User
+User = get_user_model()
 
 
 class RegisterForm(UserCreationForm):
@@ -55,3 +56,15 @@ class LoginForm(AuthenticationForm):
             'placeholder': 'Password'
         })
     )
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'avatar']
+
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-input'}),
+            'email': forms.EmailInput(attrs={'class': 'form-input'}),
+            'avatar': forms.ClearableFileInput(attrs={'class': 'form-input'}),
+        }

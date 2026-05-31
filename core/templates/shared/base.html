@@ -14,9 +14,9 @@
 
     {% if user.is_authenticated %}
         <ul class="navbar-links">
-            <li><a href="#">Todos</a></li>
-            <li><a href="#">Add</a></li>
-            <li><a href="#">Profile</a></li>
+            <li><a href="{% url 'tasks:list' %}">Todos</a></li>
+            <li><a href="{% url 'tasks:create' %}">Add</a></li>
+            <li><a href="{% url 'accounts:profile' %}">Profile</a></li>
         </ul>
     {% else %}
         <ul class="navbar-links">

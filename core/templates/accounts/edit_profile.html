@@ -1,0 +1,48 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}
+    Edit Profile
+{% endblock %}
+
+{% block body %}
+
+    <main class="container">
+
+        <h1 class="page-title">Edit Profile</h1>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label>Username</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <div class="form-group">
+                <label>Avatar</label>
+                {{ form.avatar }}
+                {{ form.avatar.errors }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Save Changes
+            </button>
+
+        </form>
+
+    </main>
+
+{% endblock %}

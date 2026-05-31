@@ -1,69 +1,73 @@
 {% extends 'shared/base.html' %}
 
 {% block title %}
-Profile
+    Profile
 {% endblock %}
 
 {% block body %}
 
-<main class="container">
+    <main class="container">
 
-    <div class="profile-header">
+        <div class="profile-header">
 
-        {% if user.avatar %}
-            <img class="profile-avatar"
-                 src="{{ user.avatar.url }}"
-                 alt="Avatar">
-        {% else %}
-            <div class="profile-avatar">
-                {{ user.username|first|upper }}
+            {% if user.avatar %}
+                <img class="profile-avatar"
+                     src="{{ user.avatar.url }}"
+                     alt="Avatar">
+            {% else %}
+                <div class="profile-avatar">
+                    {{ user.username|first|upper }}
+                </div>
+            {% endif %}
+
+            <div class="profile-name">
+                {{ user.username }}
             </div>
-        {% endif %}
 
-        <div class="profile-name">
-            {{ user.username }}
+            <div class="profile-email">
+                {{ user.email }}
+            </div>
+
+            <div class="profile-stats">
+
+                <div class="stat">
+                    <div class="stat-value">{{ total_tasks|default:0 }}</div>
+                    <div class="stat-label">Total</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-value">{{ done_tasks|default:0 }}</div>
+                    <div class="stat-label">Done</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-value">{{ pending_tasks|default:0 }}</div>
+                    <div class="stat-label">Pending</div>
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="profile-email">
-            {{ user.email }}
-        </div>
+        <div class="profile-actions">
 
-        <div class="profile-stats">
+            <a href="{% url 'accounts:edit_profile' %}" class="btn btn-secondary">
+                Edit Profile
+            </a>
 
-            <div class="stat">
-                <div class="stat-value">{{ total_tasks|default:0 }}</div>
-                <div class="stat-label">Total</div>
-            </div>
+            <a href="{% url 'tasks:list' %}" class="btn btn-secondary">
+                My Tasks
+            </a>
 
-            <div class="stat">
-                <div class="stat-value">{{ done_tasks|default:0 }}</div>
-                <div class="stat-label">Done</div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-value">{{ pending_tasks|default:0 }}</div>
-                <div class="stat-label">Pending</div>
-            </div>
+            <form action="{% url 'accounts:logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button class="btn btn-danger">
+                    Logout
+                </button>
+            </form>
 
         </div>
 
-    </div>
-
-    <div class="profile-actions">
-
-        <a href="{% url 'tasks:list' %}" class="btn btn-secondary">
-            My Tasks
-        </a>
-
-        <form action="{% url 'accounts:logout' %}" method="post" style="display:inline;">
-            {% csrf_token %}
-            <button class="btn btn-danger">
-                Logout
-            </button>
-        </form>
-
-    </div>
-
-</main>
+    </main>
 
 {% endblock %}

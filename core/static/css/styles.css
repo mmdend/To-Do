@@ -3,69 +3,88 @@
    ========================================== */
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #F9F8F6;
-  color: #4a4a4a;
-  min-height: 100vh;
-  line-height: 1.6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F9F8F6;
+    color: #4a4a4a;
+    min-height: 100vh;
+    line-height: 1.6;
 }
 
 a {
-  text-decoration: none;
-  color: inherit;
+    text-decoration: none;
+    color: inherit;
 }
 
 /* Navbar */
 .navbar {
-  background-color: #EFE9E3;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #D9CFC7;
+    background-color: #EFE9E3;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #D9CFC7;
 }
 
 .navbar-brand {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #4a4a4a;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #4a4a4a;
 }
 
 .navbar-links {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
+    display: flex;
+    gap: 2rem;
+    list-style: none;
 }
 
 .navbar-links a {
-  color: #5a5a5a;
-  font-size: 0.9rem;
-  transition: color 0.2s;
+    color: #5a5a5a;
+    font-size: 0.9rem;
+    transition: color 0.2s;
 }
 
 .navbar-links a:hover {
-  color: #C9B59C;
+    color: #C9B59C;
 }
 
 /* Container */
 .container {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
 }
 
 /* Page Title */
 .page-title {
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin-bottom: 2rem;
-  color: #3a3a3a;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    color: #3a3a3a;
+}
+
+.task-actions a {
+    display: inline-block;
+    color: #333;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.btn-edit:hover {
+    background-color: rgba(255, 193, 7, 0.15);
+    color: #d4a000;
+}
+
+.btn-delete:hover {
+    background-color: rgba(255, 0, 0, 0.08);
+    color: #e74c3c;
 }
 
 /* ==========================================
@@ -73,82 +92,82 @@ a {
    ========================================== */
 
 .form-group {
-  margin-bottom: 1.25rem;
+    margin-bottom: 1.25rem;
 }
 
 .form-label {
-  display: block;
-  font-size: 0.85rem;
-  color: #5a5a5a;
-  margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.85rem;
+    color: #5a5a5a;
+    margin-bottom: 0.5rem;
 }
 
 .form-input,
 .form-textarea {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #D9CFC7;
-  border-radius: 4px;
-  font-size: 0.95rem;
-  background-color: #fff;
-  color: #4a4a4a;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #D9CFC7;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    background-color: #fff;
+    color: #4a4a4a;
 }
 
 .form-input:focus,
 .form-textarea:focus {
-  outline: none;
-  border-color: #C9B59C;
+    outline: none;
+    border-color: #C9B59C;
 }
 
 .form-textarea {
-  resize: vertical;
-  min-height: 100px;
+    resize: vertical;
+    min-height: 100px;
 }
 
 /* Buttons */
 .btn {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  font-size: 0.9rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  text-align: center;
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
 }
 
 .btn-primary {
-  background-color: #C9B59C;
-  color: #fff;
-  width: 100%;
+    background-color: #C9B59C;
+    color: #fff;
+    width: 100%;
 }
 
 .btn-primary:hover {
-  background-color: #b8a38a;
+    background-color: #b8a38a;
 }
 
 .btn-secondary {
-  background-color: #EFE9E3;
-  color: #4a4a4a;
+    background-color: #EFE9E3;
+    color: #4a4a4a;
 }
 
 .btn-secondary:hover {
-  background-color: #D9CFC7;
+    background-color: #D9CFC7;
 }
 
 /* Links */
 .form-footer {
-  text-align: center;
-  margin-top: 1.5rem;
-  font-size: 0.85rem;
-  color: #6a6a6a;
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: #6a6a6a;
 }
 
 .form-footer a {
-  color: #C9B59C;
+    color: #C9B59C;
 }
 
 .form-footer a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 /* ==========================================
@@ -156,23 +175,23 @@ a {
    ========================================== */
 
 .card {
-  background-color: #EFE9E3;
-  border-radius: 6px;
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-  border: 1px solid #D9CFC7;
+    background-color: #EFE9E3;
+    border-radius: 6px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid #D9CFC7;
 }
 
 .card-title {
-  font-size: 1rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  color: #3a3a3a;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #3a3a3a;
 }
 
 .card-text {
-  font-size: 0.85rem;
-  color: #6a6a6a;
+    font-size: 0.85rem;
+    color: #6a6a6a;
 }
 
 /* ==========================================
@@ -180,41 +199,46 @@ a {
    ========================================== */
 
 .todo-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
 }
 
 .todo-list {
-  list-style: none;
+    list-style: none;
 }
 
 .todo-item {
-  background-color: #EFE9E3;
-  border-radius: 6px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 0.75rem;
-  border: 1px solid #D9CFC7;
+    background-color: #EFE9E3;
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid #D9CFC7;
 }
 
 .todo-item-title {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #3a3a3a;
-  margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #3a3a3a;
+    margin-bottom: 0.25rem;
 }
 
 .todo-item-desc {
-  font-size: 0.8rem;
-  color: #6a6a6a;
+    font-size: 0.8rem;
+    color: #6a6a6a;
 }
 
 .empty-state {
-  text-align: center;
-  padding: 3rem 1rem;
-  color: #8a8a8a;
-  font-size: 0.9rem;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #8a8a8a;
+    font-size: 0.9rem;
+}
+
+.todo-item.completed {
+    opacity: 0.6;
+    text-decoration: line-through;
 }
 
 /* ==========================================
@@ -222,65 +246,65 @@ a {
    ========================================== */
 
 .profile-header {
-  text-align: center;
-  margin-bottom: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 .profile-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: #D9CFC7;
-  margin: 0 auto 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  color: #fff;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #D9CFC7;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #fff;
 }
 
 .profile-name {
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: #3a3a3a;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #3a3a3a;
 }
 
 .profile-email {
-  font-size: 0.85rem;
-  color: #6a6a6a;
+    font-size: 0.85rem;
+    color: #6a6a6a;
 }
 
 .profile-stats {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 1.5rem;
-  padding: 1rem;
-  background-color: #EFE9E3;
-  border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #EFE9E3;
+    border-radius: 6px;
 }
 
 .stat {
-  text-align: center;
+    text-align: center;
 }
 
 .stat-value {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #C9B59C;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #C9B59C;
 }
 
 .stat-label {
-  font-size: 0.75rem;
-  color: #6a6a6a;
+    font-size: 0.75rem;
+    color: #6a6a6a;
 }
 
 .profile-actions {
-  margin-top: 2rem;
-  text-align: center;
+    margin-top: 2rem;
+    text-align: center;
 }
 
 .profile-actions .btn {
-  display: block;
-  margin-bottom: 0.75rem;
+    display: block;
+    margin-bottom: 0.75rem;
 }

@@ -1,11 +1,12 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView, FormView
+from django.views.generic.edit import CreateView
 
+from .forms import LoginForm
 from .forms import RegisterForm
 from .models import User
 
@@ -32,18 +33,11 @@ class RegisterView(CreateView):
 
 class CustomLoginView(LoginView):
     template_name = 'accounts/login_page.html'
+    authentication_form = LoginForm
     redirect_authenticated_user = True
 
     def get_success_url(self):
         return reverse_lazy('accounts:profile')
-
-    def form_valid(self, form):
-        messages.success(self.request, f'Welcome {self.request.user.username}!')
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, 'Username or password is incorrect.')
-        return super().form_invalid(form)
 
 
 class CustomLogoutView(LogoutView):

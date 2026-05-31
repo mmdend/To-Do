@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from .models import User
 
@@ -20,3 +20,19 @@ class RegisterForm(UserCreationForm):
                 user.avatar = self.cleaned_data['avatar']
                 user.save()
         return user
+
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'Username'
+        })
+    )
+
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'Password'
+        })
+    )

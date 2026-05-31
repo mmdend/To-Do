@@ -1,7 +1,63 @@
-<h1>Create or Update Task</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-</form>
-<a href="{% url 'tasks:list' %}">Back to Task List</a>
+{% extends 'shared/base.html' %}
+
+{% block title %}
+    Task Form
+{% endblock %}
+
+{% block body %}
+
+    <main class="container">
+
+        <h1 class="page-title">
+            {% if form.instance.pk %}
+                Update Task
+            {% else %}
+                Create Task
+            {% endif %}
+        </h1>
+
+        <div class="card">
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="form-errors">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                    <div class="form-group">
+
+                        <label class="form-label" for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.errors %}
+                            <div class="field-error">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+
+            </form>
+
+        </div>
+
+        <a href="{% url 'tasks:list' %}" class="btn btn-secondary">
+            Back to Task List
+        </a>
+
+    </main>
+
+{% endblock %}

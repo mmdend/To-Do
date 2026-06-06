@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
@@ -23,6 +24,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        messages.success(self.request, "Task created successfully!")
         return super().form_valid(form)
 
 
@@ -35,6 +37,10 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     def get_queryset(self):
         return Tasks.objects.filter(user=self.request.user)
 
+    def form_valid(self, form):
+        messages.success(self.request, "Task updated successfully!")
+        return super().form_valid(form)
+
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Tasks
@@ -43,3 +49,7 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return Tasks.objects.filter(user=self.request.user)
+
+    def form_valid(self, form):
+        messages.success(self.request, "Task deleted successfully!")
+        return super().form_valid(form)

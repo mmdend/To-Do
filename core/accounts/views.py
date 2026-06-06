@@ -43,6 +43,10 @@ class CustomLoginView(LoginView):
     def get_success_url(self):
         return reverse_lazy('accounts:profile')
 
+    def form_valid(self, form):
+        messages.success(self.request, "You logged in successfully!")
+        return super().form_valid(form)
+
 
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('accounts:login')

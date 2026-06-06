@@ -193,13 +193,43 @@ a {
     flex-wrap: wrap;
 }
 
-/* hover upgrade برای کل دکمه‌ها */
 .btn {
     transition: all 0.2s ease;
 }
 
 .btn:hover {
     transform: translateY(-2px);
+}
+
+
+.messages-container {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.message {
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    color: white;
+}
+
+.success {
+    background: #28a745;
+}
+
+.error {
+    background: #dc3545;
+}
+
+.warning {
+    background: #ffc107;
+    color: black;
+}
+
+.info {
+    background: #17a2b8;
 }
 
 /* ==========================================

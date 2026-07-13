@@ -1,5 +1,7 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .serializers import TaskSerializer
 from ...models import Tasks
@@ -36,3 +38,19 @@ class TaskRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Tasks.objects.filter(user=self.request.user)
+
+
+class TaskCompleteView(APIView):
+    """
+    PATCH <id>/complete/  → mark task as complete
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, pk):
+        task = Tasks.objects.filter(pk=pk, user=request.user).first()
+        if not task:
+            return Response({"detail": "Not found."}, status=404)
+        task.is_completed = True
+        task.save()
+        return Response(TaskSerializer(task, context={"request": request}).data)

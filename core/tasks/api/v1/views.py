@@ -10,8 +10,8 @@ from .serializers import TaskSerializer
 class TaskListCreateView(generics.ListCreateAPIView):
     """
     API view to list and create tasks for the current authenticated user.
-    GET  /api/v1/  → list current user's tasks
-    POST /api/v1/  → create a task
+    GET  /api/v1/tasks/  → list current user's tasks
+    POST /api/v1/tasks/  → create a task
     """
 
     serializer_class = TaskSerializer
@@ -27,14 +27,14 @@ class TaskListCreateView(generics.ListCreateAPIView):
 
 class TaskRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     """
-    GET     <id>/  → retrieve a task
-    PUT     <id>/  → full update
-    PATCH   <id>/  → partial update
-    DELETE  <id>/  → delete
+    GET     /api/v1/tasks/<id>/  → retrieve a task
+    PUT     /api/v1/tasks/<id>/  → full update
+    PATCH   /api/v1/tasks/<id>/  → partial update
+    DELETE  /api/v1/tasks/<id>/  → delete
     """
 
     serializer_class = TaskSerializer
-    permission_classes = IsAuthenticated
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return Tasks.objects.filter(user=self.request.user)
@@ -42,7 +42,7 @@ class TaskRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 class TaskCompleteView(APIView):
     """
-    PATCH <id>/complete/  → mark task as complete
+    PATCH /api/v1/tasks/<id>/complete/  → mark task as complete
     """
 
     permission_classes = (IsAuthenticated,)

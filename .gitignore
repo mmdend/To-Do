@@ -69,3 +69,5 @@ local_settings.py
 db.sqlite3
 
 core/media/
+
+.ruff_cache/

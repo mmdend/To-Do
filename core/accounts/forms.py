@@ -24,7 +24,7 @@ class RegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ["username", "email", "avatar", "password1", "password2"]
+        fields = ("username", "email", "avatar", "password1", "password2")
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -51,7 +51,7 @@ class LoginForm(AuthenticationForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["username", "email", "avatar"]
+        fields = ("username", "email", "avatar")
 
         widgets = {
             "username": forms.TextInput(attrs={"class": "form-input"}),

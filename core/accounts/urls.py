@@ -1,15 +1,22 @@
 from django.contrib.auth.decorators import login_required
 from django.urls import path
 
-from .views import CustomLoginView, CustomLogoutView, ProfileView, RegisterView, HomeView, ProfileUpdateView
+from .views import (
+    CustomLoginView,
+    CustomLogoutView,
+    HomeView,
+    ProfileUpdateView,
+    ProfileView,
+    RegisterView,
+)
 
-app_name = 'accounts'
+app_name = "accounts"
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='home'),
-    path('login/', CustomLoginView.as_view(), name='login'),
-    path('logout/', CustomLogoutView.as_view(), name='logout'),
-    path('register/', RegisterView.as_view(), name='register'),
-    path('profile/', login_required(ProfileView.as_view()), name='profile'),
-    path('profile/edit/', ProfileUpdateView.as_view(), name='edit_profile'),
+    path("", HomeView.as_view(), name="home"),
+    path("login/", CustomLoginView.as_view(), name="login"),
+    path("logout/", CustomLogoutView.as_view(), name="logout"),
+    path("register/", RegisterView.as_view(), name="register"),
+    path("profile/", login_required(ProfileView.as_view()), name="profile"),
+    path("profile/edit/", ProfileUpdateView.as_view(), name="edit_profile"),
 ]

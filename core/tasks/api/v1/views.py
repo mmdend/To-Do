@@ -3,8 +3,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import TaskSerializer
 from ...models import Tasks
+from .serializers import TaskSerializer
 
 
 class TaskListCreateView(generics.ListCreateAPIView):
@@ -15,10 +15,10 @@ class TaskListCreateView(generics.ListCreateAPIView):
     """
 
     serializer_class = TaskSerializer
-    permission_classes = [IsAuthenticated]
-    search_fields = ["title", "description"]
-    ordering_fields = ["created_at", "title"]
-    ordering = ["-created_at"]
+    permission_classes = (IsAuthenticated,)
+    search_fields = ("title", "description")
+    ordering_fields = ("created_at", "title")
+    ordering = ("-created_at",)
 
     def get_queryset(self):
         # Users can only see their own tasks
@@ -34,7 +34,7 @@ class TaskRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     """
 
     serializer_class = TaskSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = IsAuthenticated
 
     def get_queryset(self):
         return Tasks.objects.filter(user=self.request.user)
@@ -45,7 +45,7 @@ class TaskCompleteView(APIView):
     PATCH <id>/complete/  → mark task as complete
     """
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated,)
 
     def patch(self, request, pk):
         task = Tasks.objects.filter(pk=pk, user=request.user).first()

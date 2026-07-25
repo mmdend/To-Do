@@ -5,11 +5,7 @@ User = get_user_model()
 
 
 class Tasks(models.Model):
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='tasks'
-    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tasks")
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     is_completed = models.BooleanField(default=False)
@@ -19,5 +15,5 @@ class Tasks(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['-created_at']
-        verbose_name_plural = 'Tasks'
+        ordering = ["-created_at"]
+        verbose_name_plural = "Tasks"

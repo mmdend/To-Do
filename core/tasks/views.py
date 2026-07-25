@@ -9,8 +9,8 @@ from .models import Tasks
 
 class TaskListView(LoginRequiredMixin, ListView):
     model = Tasks
-    template_name = 'tasks/task_list.html'
-    context_object_name = 'tasks'
+    template_name = "tasks/task_list.html"
+    context_object_name = "tasks"
 
     def get_queryset(self):
         return Tasks.objects.filter(user=self.request.user)
@@ -19,8 +19,8 @@ class TaskListView(LoginRequiredMixin, ListView):
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Tasks
     form_class = TaskForm
-    template_name = 'tasks/task_form.html'
-    success_url = reverse_lazy('tasks:list')
+    template_name = "tasks/task_form.html"
+    success_url = reverse_lazy("tasks:list")
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -31,8 +31,8 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Tasks
     form_class = TaskForm
-    template_name = 'tasks/task_form.html'
-    success_url = reverse_lazy('tasks:list')
+    template_name = "tasks/task_form.html"
+    success_url = reverse_lazy("tasks:list")
 
     def get_queryset(self):
         return Tasks.objects.filter(user=self.request.user)
@@ -44,8 +44,8 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Tasks
-    template_name = 'tasks/task_confirm_delete.html'
-    success_url = reverse_lazy('tasks:list')
+    template_name = "tasks/task_confirm_delete.html"
+    success_url = reverse_lazy("tasks:list")
 
     def get_queryset(self):
         return Tasks.objects.filter(user=self.request.user)

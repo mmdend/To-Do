@@ -1,0 +1,17 @@
+| URL                                | View                                               | Name                               |
+| ---------------------------------- | -------------------------------------------------- | ---------------------------------- |
+| `/api-auth/login/`                 | `django.contrib.auth.views.LoginView`              | `rest_framework:login`             |
+| `/api-auth/logout/`                | `django.contrib.auth.views.LogoutView`             | `rest_framework:logout`            |
+| `/api/v1/tasks/`                   | `tasks.api.v1.views.TaskListCreateView`            | `tasks:tasks-api:task-list-create` |
+| `/api/v1/tasks/<int:pk>/`          | `tasks.api.v1.views.TaskRetrieveUpdateDestroyView` | `tasks:tasks-api:task-detail`      |
+| `/api/v1/tasks/<int:pk>/complete/` | `tasks.api.v1.views.TaskCompleteView`              | `tasks:tasks-api:task-complete`    |
+| `/login/`                          | `accounts.views.CustomLoginView`                   | `accounts:login`                   |
+| `/logout/`                         | `accounts.views.CustomLogoutView`                  | `accounts:logout`                  |
+| `/media/<path>`                    | `django.views.static.serve`                        | —                                  |
+| `/profile/`                        | `accounts.views.ProfileView`                       | `accounts:profile`                 |
+| `/profile/edit/`                   | `accounts.views.ProfileUpdateView`                 | `accounts:edit_profile`            |
+| `/register/`                       | `accounts.views.RegisterView`                      | `accounts:register`                |
+| `/tasks/`                          | `tasks.views.TaskListView`                         | `tasks:list`                       |
+| `/tasks/create/`                   | `tasks.views.TaskCreateView`                       | `tasks:create`                     |
+| `/tasks/delete/<int:pk>/`          | `tasks.views.TaskDeleteView`                       | `tasks:delete`                     |
+| `/tasks/update/<int:pk>/`          | `tasks.views.TaskUpdateView`                       | `tasks:update`                     |

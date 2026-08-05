@@ -53,7 +53,6 @@ LOCAL_APPS = [
     "tasks",
 ]
 
-
 INSTALLED_APPS = [
     *DJANGO_APPS,
     *THIRD_PARTY_APPS,
@@ -62,6 +61,7 @@ INSTALLED_APPS = [
 
 if DEBUG:
     INSTALLED_APPS += DEVELOPMENT_APPS
+
 
 AUTH_USER_MODEL = "accounts.User"
 

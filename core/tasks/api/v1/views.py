@@ -2,6 +2,7 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import viewsets
 
 from ...models import Tasks
 from .serializers import TaskSerializer
@@ -23,6 +24,14 @@ class TaskListCreateView(generics.ListCreateAPIView):
     def get_queryset(self):
         # Users can only see their own tasks
         return Tasks.objects.filter(user=self.request.user)
+
+class TaskViewSet(viewsets.ViewSet):
+    serializer_class = TaskSerializer
+
+    def list(self, request):
+        queryset = Tasks.objects.filter(user=self.request.user)
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
 
 
 class TaskRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):

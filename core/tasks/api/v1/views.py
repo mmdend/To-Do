@@ -1,8 +1,8 @@
-from rest_framework import generics
+from django.shortcuts import get_object_or_404
+from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import viewsets
 
 from ...models import Tasks
 from .serializers import TaskSerializer
@@ -25,12 +25,23 @@ class TaskListCreateView(generics.ListCreateAPIView):
         # Users can only see their own tasks
         return Tasks.objects.filter(user=self.request.user)
 
+
 class TaskViewSet(viewsets.ViewSet):
     serializer_class = TaskSerializer
 
+    def get_queryset(self):
+        # Users can only see their own tasks
+        return Tasks.objects.filter(user=self.request.user)
+
     def list(self, request):
-        queryset = Tasks.objects.filter(user=self.request.user)
+        queryset = self.get_queryset()
         serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = self.get_queryset()
+        task = get_object_or_404(queryset, pk=pk)
+        serializer = self.serializer_class(task)
         return Response(serializer.data)
 
 

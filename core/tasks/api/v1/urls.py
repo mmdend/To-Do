@@ -5,7 +5,7 @@ from . import views
 app_name = "tasks-api"
 
 router = DefaultRouter()
-router.register("tasks", views.TaskViewSet, basename="tasks")
+router.register("tasks", views.TaskModelViewSet, basename="tasks")
 urlpatterns = router.urls
 
 # urlpatterns = [

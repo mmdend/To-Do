@@ -1,5 +1,4 @@
-from django.shortcuts import get_object_or_404
-from rest_framework import generics, viewsets
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,8 +6,7 @@ from rest_framework.views import APIView
 from ...models import Tasks
 from .serializers import TaskSerializer
 
-
-class TaskListCreateView(generics.ListCreateAPIView):
+'''class TaskListCreateView(generics.ListCreateAPIView):
     """
     API view to list and create tasks for the current authenticated user.
     GET  /api/v1/tasks/  → list current user's tasks
@@ -24,28 +22,29 @@ class TaskListCreateView(generics.ListCreateAPIView):
     def get_queryset(self):
         # Users can only see their own tasks
         return Tasks.objects.filter(user=self.request.user)
+'''
 
 
-class TaskViewSet(viewsets.ViewSet):
+class TaskModelViewSet(viewsets.ModelViewSet):
+    """
+    ModelViewSet for managing tasks belonging to the currently authenticated user.
+        GET    /api/v1/tasks/
+        POST   /api/v1/tasks/
+        GET    /api/v1/tasks/<id>/
+        PUT    /api/v1/tasks/<id>/
+        PATCH  /api/v1/tasks/<id>/
+        DELETE /api/v1/tasks/<id>/
+    """
+
     serializer_class = TaskSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         # Users can only see their own tasks
         return Tasks.objects.filter(user=self.request.user)
 
-    def list(self, request):
-        queryset = self.get_queryset()
-        serializer = self.serializer_class(queryset, many=True)
-        return Response(serializer.data)
 
-    def retrieve(self, request, pk=None):
-        queryset = self.get_queryset()
-        task = get_object_or_404(queryset, pk=pk)
-        serializer = self.serializer_class(task)
-        return Response(serializer.data)
-
-
-class TaskRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+'''class TaskRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     """
     GET     /api/v1/tasks/<id>/  → retrieve a task
     PUT     /api/v1/tasks/<id>/  → full update
@@ -58,6 +57,7 @@ class TaskRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Tasks.objects.filter(user=self.request.user)
+'''
 
 
 class TaskCompleteView(APIView):

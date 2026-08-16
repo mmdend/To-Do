@@ -4,9 +4,11 @@ from ...models import Tasks
 
 
 class TaskSerializer(serializers.ModelSerializer):
+    snippet = serializers.ReadOnlyField(source="get_snippet")
+
     class Meta:
         model = Tasks
-        fields = ("id", "title", "description", "is_completed", "created_at")
+        fields = ("id", "title", "description", "snippet", "is_completed", "created_at")
         read_only_fields = ("id", "created_at")
 
     def create(self, validated_data):

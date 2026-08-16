@@ -14,6 +14,9 @@ class Tasks(models.Model):
     def __str__(self):
         return self.title
 
+    def get_snippet(self):
+        return self.description[0:10]
+
     class Meta:
         ordering = ["-created_at"]
         verbose_name_plural = "Tasks"

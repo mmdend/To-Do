@@ -1,42 +1,26 @@
-# pull official base image
-#FROM docker.arvancloud.ir/python:3.12-slim-bullseye
-FROM python:3.12-slim-bullseye
-# maintainers info
-LABEL maintainer="bigdeli.ali3@gmail.com"
+FROM python:3.14
 
-ENV PYTHONUNBUFFERED=1 \
-    PIP_INDEX_URL=https://mirror-pypi.runflare.com/simple
+# Set environment variables 
+# Prevents Python from writing pyc files to disk
+ENV PYTHONDONTWRITEBYTECODE=1
+#Prevents Python from buffering stdout and stderr
+ENV PYTHONUNBUFFERED=1 
 
-# Install Nginx using internal mirrors
-RUN sed -i 's|http://deb.debian.org/debian|http://mirror.arvancloud.ir/debian|g' /etc/apt/sources.list \
- && sed -i 's|http://security.debian.org/debian-security|http://mirror.arvancloud.ir/debian-security|g' /etc/apt/sources.list
+# Set the working directory inside the container
+WORKDIR /app
 
-RUN apt-get update -o Acquire::Check-Valid-Until=false \
-    && apt-get install -y nginx \
-    && rm -rf /var/lib/apt/lists/*
+# Copy the Django project  and install dependencies
+COPY requirements.txt  /app/
 
-# set work directory
-WORKDIR /usr/src/app
+# Upgrade pip
+RUN pip3 install --upgrade pip 
 
-# install dependencies using internal Python mirror
-COPY ./requirements.txt .
-RUN pip install --upgrade pip  \
-    && pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
-# Set up Gunicorn
-COPY ./core .
+# Copy the Django project to the container
+COPY ./core /app
 
-# Configure Nginx
-COPY ./dockerfiles/prod/django/nginx/nginx.conf /etc/nginx/nginx.conf
+RUN chmod +r /app/manage.py
 
-# exposing nginx port
-EXPOSE 80
-
-# copy entrypoint
-COPY ./dockerfiles/prod/django/entrypoint.sh .
-
-# make entrypoint executable
-RUN chmod +x ./entrypoint.sh
-
-# execute entrypoint
-CMD ["./entrypoint.sh", "python3", "ruserver", "0.0.0.0.8000"]
+# Run Django’s development server
+# CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]

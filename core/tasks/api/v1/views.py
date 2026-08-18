@@ -1,10 +1,48 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from ...models import Tasks
+from .permissions import IsOwner
 from .serializers import TaskSerializer
+
+
+class TaskModelViewSet(viewsets.ModelViewSet):
+    """
+    ModelViewSet for managing tasks belonging to the currently authenticated user.
+        GET    /api/v1/tasks/
+        POST   /api/v1/tasks/
+        GET    /api/v1/tasks/<id>/
+        PUT    /api/v1/tasks/<id>/
+        PATCH  /api/v1/tasks/<id>/
+        DELETE /api/v1/tasks/<id>/
+    """
+
+    serializer_class = TaskSerializer
+    permission_classes = (IsAuthenticated, IsOwner)
+
+    def get_queryset(self):
+        # Users can only see their own tasks
+        return Tasks.objects.filter(user=self.request.user)
+
+    # def perform_create(self, serializer):
+    #     serializer.save(user=self.request.user)
+
+
+'''class TaskCompleteView(APIView):
+    """
+    PATCH /api/v1/tasks/<id>/complete/
+    """
+
+    permission_classes = (IsAuthenticated, IsOwner)
+
+    def patch(self, request, pk):
+        task = Tasks.objects.filter(pk=pk, user=request.user).first()
+        if not task:
+            return Response({"detail": "Not found."}, status=404)
+        task.is_completed = True
+        task.save()
+        return Response(TaskSerializer(task, context={"request": request}).data)
+'''
 
 '''class TaskListCreateView(generics.ListCreateAPIView):
     """
@@ -24,26 +62,6 @@ from .serializers import TaskSerializer
         return Tasks.objects.filter(user=self.request.user)
 '''
 
-
-class TaskModelViewSet(viewsets.ModelViewSet):
-    """
-    ModelViewSet for managing tasks belonging to the currently authenticated user.
-        GET    /api/v1/tasks/
-        POST   /api/v1/tasks/
-        GET    /api/v1/tasks/<id>/
-        PUT    /api/v1/tasks/<id>/
-        PATCH  /api/v1/tasks/<id>/
-        DELETE /api/v1/tasks/<id>/
-    """
-
-    serializer_class = TaskSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def get_queryset(self):
-        # Users can only see their own tasks
-        return Tasks.objects.filter(user=self.request.user)
-
-
 '''class TaskRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     """
     GET     /api/v1/tasks/<id>/  → retrieve a task
@@ -58,19 +76,3 @@ class TaskModelViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Tasks.objects.filter(user=self.request.user)
 '''
-
-
-class TaskCompleteView(APIView):
-    """
-    PATCH /api/v1/tasks/<id>/complete/  → mark task as complete
-    """
-
-    permission_classes = (IsAuthenticated,)
-
-    def patch(self, request, pk):
-        task = Tasks.objects.filter(pk=pk, user=request.user).first()
-        if not task:
-            return Response({"detail": "Not found."}, status=404)
-        task.is_completed = True
-        task.save()
-        return Response(TaskSerializer(task, context={"request": request}).data)

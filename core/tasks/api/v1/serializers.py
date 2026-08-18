@@ -17,6 +17,7 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Tasks
         fields = (
             "id",
+            "user",
             "title",
             "description",
             "snippet",
@@ -26,7 +27,7 @@ class TaskSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_date",
         )
-        read_only_fields = ("id", "created_at")
+        read_only_fields = ("id", "user", "created_at")
 
     def get_absolute_url(self, obj):
         request = self.context.get("request")
@@ -43,7 +44,9 @@ class TaskSerializer(serializers.ModelSerializer):
             representation.pop("description", None)
 
         representation["category"] = (
-            CategorySerializer(instance.category).data if instance.category else None
+            CategorySerializer(instance.category, context={"request": request}).data
+            if instance.category
+            else None
         )
 
         return representation

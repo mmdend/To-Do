@@ -1,4 +1,6 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
+from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 
 from ...models import Tasks
@@ -19,6 +21,15 @@ class TaskModelViewSet(viewsets.ModelViewSet):
 
     serializer_class = TaskSerializer
     permission_classes = (IsAuthenticated, IsOwner)
+    filter_backends = (
+        DjangoFilterBackend,
+        SearchFilter,
+    )
+    filterset_fields = (
+        "category",
+        "is_completed",
+    )
+    search_fields = ("title", "description")
 
     def get_queryset(self):
         # Users can only see their own tasks

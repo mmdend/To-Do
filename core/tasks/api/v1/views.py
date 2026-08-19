@@ -6,8 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from tasks.api.v1.filters import TaskFilter
 from tasks.api.v1.paginations import DefaultPagination
 from tasks.api.v1.permissions import IsOwner
-from tasks.api.v1.serializers import TaskSerializer
-from tasks.models import Tasks
+from tasks.api.v1.serializers import CategorySerializer, TaskSerializer
+from tasks.models import Category, Tasks
 
 
 class TaskModelViewSet(viewsets.ModelViewSet):
@@ -38,8 +38,13 @@ class TaskModelViewSet(viewsets.ModelViewSet):
         # Users can only see their own tasks
         return Tasks.objects.filter(user=self.request.user)
 
-    # def perform_create(self, serializer):
-    #     serializer.save(user=self.request.user)
+
+class CategoryModelViewSet(viewsets.ModelViewSet):
+    serializer_class = CategorySerializer
+    permission_classes = (IsAuthenticated, IsOwner)
+
+    def get_queryset(self):
+        return Category.objects.filter(user=self.request.user)
 
 
 '''class TaskCompleteView(APIView):

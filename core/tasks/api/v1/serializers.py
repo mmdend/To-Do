@@ -6,12 +6,22 @@ from ...models import Category, Tasks
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ["id", "name"]
+        fields = ("id", "name", "user")
+        read_only_fields = ("id", "user")
+
+    def create(self, validated_data):
+        validated_data["user"] = self.context["request"].user
+        return super().create(validated_data)
 
 
 class TaskSerializer(serializers.ModelSerializer):
     snippet = serializers.ReadOnlyField(source="get_snippet")
     absolute_url = serializers.SerializerMethodField()
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(),
+        required=False,
+        allow_null=True,
+    )
 
     class Meta:
         model = Tasks
@@ -54,3 +64,13 @@ class TaskSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data["user"] = self.context["request"].user
         return super().create(validated_data)
+
+    def get_fields(self):
+        fields = super().get_fields()
+
+        request = self.context.get("request")
+
+        if request and request.user.is_authenticated:
+            fields["category"].queryset = Category.objects.filter(user=request.user)
+
+        return fields

@@ -25,6 +25,11 @@ class Tasks(models.Model):
 
 
 class Category(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="categories",
+    )
     name = models.CharField(max_length=255)
 
     def __str__(self):

@@ -6,6 +6,7 @@ app_name = "tasks-api"
 
 router = DefaultRouter()
 router.register("tasks", views.TaskModelViewSet, basename="tasks")
+router.register("categories", views.CategoryModelViewSet, basename="categories")
 urlpatterns = router.urls
 
 # urlpatterns = [

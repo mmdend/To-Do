@@ -25,7 +25,7 @@ class TaskSerializer(serializers.ModelSerializer):
             "is_completed",
             "category",
             "created_at",
-            "updated_date",
+            "updated_at",
         )
         read_only_fields = ("id", "user", "created_at")
 

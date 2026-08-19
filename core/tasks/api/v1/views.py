@@ -3,10 +3,11 @@ from rest_framework import viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import IsAuthenticated
 
-from ...models import Tasks
-from .paginations import DefaultPagination
-from .permissions import IsOwner
-from .serializers import TaskSerializer
+from tasks.api.v1.filters import TaskFilter
+from tasks.api.v1.paginations import DefaultPagination
+from tasks.api.v1.permissions import IsOwner
+from tasks.api.v1.serializers import TaskSerializer
+from tasks.models import Tasks
 
 
 class TaskModelViewSet(viewsets.ModelViewSet):
@@ -22,17 +23,15 @@ class TaskModelViewSet(viewsets.ModelViewSet):
 
     serializer_class = TaskSerializer
     permission_classes = (IsAuthenticated, IsOwner)
+
     filter_backends = (
         DjangoFilterBackend,
         SearchFilter,
         OrderingFilter,
     )
-    filterset_fields = (
-        "category",
-        "is_completed",
-    )
+    filterset_class = TaskFilter
     search_fields = ("title", "description")
-    ordering_fields = ("title", "created_at", "updated_date")
+    ordering_fields = ("title", "created_at", "updated_at")
     pagination_class = DefaultPagination
 
     def get_queryset(self):

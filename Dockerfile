@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 # Copy the Django project  and install dependencies
-COPY requirements.txt  /app/
+COPY /core/requirements.txt  /app/
 
 # Upgrade pip
 RUN pip3 install --upgrade pip 

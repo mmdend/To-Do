@@ -48,6 +48,7 @@ THIRD_PARTY_APPS = [
 DEVELOPMENT_APPS = [
     "django_extensions",
     "drf_spectacular",
+    "drf_yasg",
 ]
 
 LOCAL_APPS = [

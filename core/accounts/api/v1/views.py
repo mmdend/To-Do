@@ -1,6 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.views import APIView, ObtainAuthToken
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .serializers import RegistrationSerializer
@@ -28,7 +29,7 @@ class CustomObtainAuthToken(ObtainAuthToken):
         )
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
-        token, created = Token.objects.get_or_create(user=user)
+        token, _ = Token.objects.get_or_create(user=user)
         return Response(
             {
                 "token": token.key,
@@ -37,3 +38,11 @@ class CustomObtainAuthToken(ObtainAuthToken):
                 "email": user.email,
             }
         )
+
+
+class CustomDiscardAuthToken(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

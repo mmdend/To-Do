@@ -9,6 +9,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import (
     ChangePasswordSerializer,
     CustomTokenObtainPairSerializer,
+    ProfileSerializer,
     RegistrationSerializer,
 )
 
@@ -91,3 +92,16 @@ class ChangePasswordApiView(generics.GenericAPIView):
             )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfileApiView(generics.RetrieveUpdateAPIView):
+    """
+    An endpoint for retrieving user profile.
+    """
+
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ProfileSerializer
+    queryset = User.objects.all()
+
+    def get_object(self):
+        return self.request.user

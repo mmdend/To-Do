@@ -89,3 +89,4 @@ class ProfileSerializer(serializers.ModelSerializer):
             "last_name",
             "avatar",
         )
+

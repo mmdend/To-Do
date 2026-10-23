@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions
 from rest_framework import serializers
+from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 User = get_user_model()
@@ -52,9 +53,27 @@ class RegistrationSerializer(serializers.ModelSerializer):
         return User.objects.create_user(**validated_data)
 
 
+class CustomAuthTokenSerializer(AuthTokenSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        if not data["user"].is_verified:
+            raise serializers.ValidationError(
+                {"detail": "Your account has not been verified yet."}
+            )
+
+        return data
+
+
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
+
+        if not self.user.is_verified:
+            raise serializers.ValidationError(
+                {"detail": "Your account has not been verified yet."}
+            )
+
         data["username"] = self.user.username
         data["email"] = self.user.email
         return data
@@ -89,21 +108,3 @@ class ProfileSerializer(serializers.ModelSerializer):
             "last_name",
             "avatar",
         )
-
-
-@api_view(["GET", "POST"])
-def snippet_list(request):
-    """
-    List all code snippets, or create a new snippet.
-    """
-    if request.method == "GET":
-        snippets = Snippet.objects.all()
-        serializer = SnippetSerializer(snippets, many=True)
-        return Response(serializer.data)
-
-    elif request.method == "POST":
-        serializer = SnippetSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

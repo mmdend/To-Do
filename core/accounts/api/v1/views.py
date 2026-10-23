@@ -8,6 +8,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .serializers import (
     ChangePasswordSerializer,
+    CustomAuthTokenSerializer,
     CustomTokenObtainPairSerializer,
     ProfileSerializer,
     RegistrationSerializer,
@@ -32,6 +33,8 @@ class RegistrationApiView(generics.GenericAPIView):
 
 
 class CustomObtainAuthToken(ObtainAuthToken):
+    serializer_class = CustomAuthTokenSerializer
+
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
